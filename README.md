@@ -6,8 +6,8 @@ An intelligent, AI-driven interview screening system that parses resumes, genera
 
 ```
 ┌─────────────────┐     ┌──────────────────┐     ┌────────────────┐
-│   Next.js App   │────▶│  FastAPI Backend │────▶│   PostgreSQL │
-│   (Frontend)    │     │   (Python)       │     │   (Sessions)  │
+│   Next.js App   │────▶│  FastAPI Backend │────▶│   PostgreSQL  │
+│   (Frontend)    │     │   (Python)       │     │   (Sessions)   │
 └─────────────────┘     └────────┬─────────┘     └────────────────┘
                                  │
                     ┌────────────┴────────────┐
