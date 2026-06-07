@@ -1,248 +1,331 @@
-# AI-Powered Role-Based Candidate Screening System
+# 🤖 AI-Powered Role-Based Candidate Screening System
 
-An intelligent, AI-driven interview screening system that parses resumes, generates adaptive technical questions using RAG (Retrieval-Augmented Generation), evaluates answers in real-time, and produces structured hiring reports.
+An end-to-end AI interview platform that automatically analyzes resumes, generates adaptive technical interview questions using Retrieval-Augmented Generation (RAG), evaluates candidate responses in real time, and produces structured hiring reports.
 
-## Architecture
+Built with **FastAPI**, **Next.js**, **LangChain**, **ChromaDB**, **Groq LLMs**, and **PostgreSQL**, the system simulates the first stage of a technical hiring process while maintaining transparency through retrieval traceability and detailed evaluation reports.
 
-```
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)
+![Next.js](https://img.shields.io/badge/Next.js-14-black)
+![RAG](https://img.shields.io/badge/AI-RAG-orange)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue)
+
+---
+
+## 🚀 Key Highlights
+
+* 📄 Resume Parsing & Skill Extraction
+* 🧠 Adaptive AI Interview Generation
+* 🔍 Retrieval-Augmented Generation (RAG)
+* 📊 Real-Time Answer Evaluation
+* 📝 AI-Generated Hiring Reports
+* 🗄 Persistent Interview Sessions
+* 📈 Difficulty Calibration Based on Candidate Profile
+* 🔎 Full Retrieval Traceability for Every Question
+
+---
+
+## 🎯 Business Problem
+
+Recruiters and hiring managers often spend significant time conducting initial technical screenings. Generic interview questions frequently fail to accurately assess a candidate's actual skills and experience.
+
+This system addresses that challenge by:
+
+* Parsing resumes automatically
+* Identifying role-specific skills
+* Generating contextual technical questions
+* Dynamically adjusting interview difficulty
+* Scoring answers consistently
+* Producing structured hiring summaries
+
+The result is a scalable and repeatable AI-assisted technical screening workflow.
+
+---
+
+## 🏗 System Architecture
+
+```text
 ┌─────────────────┐     ┌──────────────────┐     ┌────────────────┐
-│   Next.js App   │────▶│  FastAPI Backend │────▶│   PostgreSQL  │
-│   (Frontend)    │     │   (Python)       │     │   (Sessions)   │
+│   Next.js App   │────▶│  FastAPI Backend │────▶│   PostgreSQL   │
+│   (Frontend)    │     │     (Python)     │     │   (Sessions)   │
 └─────────────────┘     └────────┬─────────┘     └────────────────┘
                                  │
                     ┌────────────┴────────────┐
                     ▼                         ▼
            ┌──────────────────┐     ┌──────────────────┐
-           │    Chroma DB     │     │    Groq LLM      │
-           │  (Vector Store)  │     │ (mixtral-8x7b)   │
+           │    ChromaDB      │     │     Groq LLM     │
+           │  Vector Store    │     │  mixtral-8x7b    │
            └──────────────────┘     └──────────────────┘
                     ▲
                     │
            ┌──────────────────┐
-           │  HuggingFace     │
-           │  Embeddings      │
-           │ (all-MiniLM-L6)  │
+           │ HuggingFace      │
+           │ Embeddings       │
+           │ all-MiniLM-L6-v2 │
            └──────────────────┘
 ```
 
-## Tech Stack
+---
 
-| Layer        | Technology                                        |
-|--------------|---------------------------------------------------|
-| Frontend     | Next.js 14 (App Router), TypeScript, Tailwind CSS |
-| Backend      | FastAPI, Python 3.11+, SQLAlchemy 2.0 (async)     |
-| Database     | PostgreSQL 15                                     |
-| Vector DB    | ChromaDB (persistent, disk-based)                 |
-| LLM          | Groq API — `mixtral-8x7b-32768` (free tier)       |
-| Embeddings   | HuggingFace `sentence-transformers/all-MiniLM-L6-v2` (local, free) |
-| RAG          | LangChain (document loading, text splitting, retrieval) |
-| PDF Parsing  | PyPDF2                                            |
+## ✨ Features
 
-> **No paid embedding API needed.** Embeddings run locally via HuggingFace sentence-transformers. Only the Groq API key is required — free tier supports 30 req/min.
+### 📄 Resume Intelligence
 
-## Features
+* Extracts text from uploaded PDF resumes
+* Detects technical skills and domain expertise
+* Estimates experience level and interview difficulty
+* Generates candidate-specific interview paths
 
-- **Resume Parsing** — Extracts text from PDF, identifies role-specific skills, infers experience level and difficulty (junior / mid / senior scores)
-- **Adaptive RAG Questioning** — Groq LLM generates role-specific questions grounded in retrieved knowledge base chunks, adapting difficulty based on granular candidate scores
-- **Answer Evaluation** — Each answer is scored 1–10 with strengths and weaknesses by the LLM
-- **Full Traceability** — Every question logs the retrieval query and retrieved context chunks used to generate it
-- **Session Management** — Complete interview state persisted in PostgreSQL with UUID-based sessions
-- **AI Summary** — End-of-interview report with per-question scores and an overall hiring insight
-- **Responsive UI** — Clean Next.js interface with progress tracking, drag-and-drop resume upload, and expandable Q&A summary cards
+### 🧠 Adaptive AI Interview Engine
 
-## Supported Roles
+* Role-aware technical questioning
+* Dynamic difficulty adjustment
+* Retrieval-grounded question generation
+* Reduced hallucinations through contextual retrieval
 
-- AI/ML Engineer
-- Backend Engineer
-- Data Scientist
+### 🔍 Retrieval-Augmented Generation (RAG)
 
-## Project Structure
+* Vector search using ChromaDB
+* Semantic retrieval using HuggingFace embeddings
+* Context-aware question generation
+* Support for custom knowledge bases
 
-```
+### 📊 Answer Evaluation
+
+* Scores answers on a 1–10 scale
+* Identifies strengths and weaknesses
+* Provides structured evaluation feedback
+* Maintains consistency across interview sessions
+
+### 🗂 Interview Session Management
+
+* UUID-based interview sessions
+* PostgreSQL persistence
+* Complete interview state tracking
+* Recovery and reporting support
+
+### 📝 AI Hiring Reports
+
+* Per-question evaluations
+* Aggregate performance scoring
+* Candidate strengths and weaknesses
+* Hiring recommendation insights
+
+### 🔎 Full Explainability
+
+Every generated question stores:
+
+* Retrieval query
+* Retrieved document chunks
+* Generated question
+* Candidate answer
+* Evaluation result
+
+This creates a fully auditable interview trail.
+
+---
+
+## 👨‍💻 Supported Roles
+
+Currently supported:
+
+* AI / ML Engineer
+* Backend Engineer
+* Data Scientist
+
+Additional roles can be added through knowledge-base expansion and prompt configuration.
+
+---
+
+## 🛠 Technology Stack
+
+| Layer            | Technology                            |
+| ---------------- | ------------------------------------- |
+| Frontend         | Next.js 14, TypeScript, Tailwind CSS  |
+| Backend          | FastAPI, Python 3.11+, SQLAlchemy 2.0 |
+| Database         | PostgreSQL 15                         |
+| Vector Database  | ChromaDB                              |
+| Embeddings       | HuggingFace Sentence Transformers     |
+| LLM              | Groq Mixtral-8x7B                     |
+| RAG Framework    | LangChain                             |
+| PDF Processing   | PyPDF2                                |
+| Containerization | Docker & Docker Compose               |
+
+---
+
+## 📂 Project Structure
+
+```text
 ai-candidate-screener/
+│
 ├── backend/
 │   ├── app/
-│   │   ├── main.py                  # FastAPI entry point + lifespan
-│   │   ├── config.py                # Environment config (Settings class)
-│   │   ├── database.py              # SQLAlchemy async engine + session factory
-│   │   ├── models/
-│   │   │   ├── session.py           # Session ORM model (difficulty scores, state)
-│   │   │   └── qa.py                # QARecord ORM model (question, answer, eval)
-│   │   ├── schemas/
-│   │   │   ├── session.py           # Pydantic session schemas
-│   │   │   ├── answer.py            # Answer request/response schemas
-│   │   │   └── summary.py           # Summary response schema
 │   │   ├── routers/
-│   │   │   ├── upload.py            # POST /upload_resume
-│   │   │   ├── interview.py         # POST /answer/{session_id}
-│   │   │   └── summary.py           # GET /summary/{session_id}
-│   │   └── services/
-│   │       ├── resume_parser.py     # PDF text extraction + skill/difficulty inference
-│   │       ├── knowledge_base.py    # ChromaDB + HuggingFace embeddings
-│   │       ├── retrieval.py         # Dynamic query builder + context retrieval
-│   │       ├── question_generator.py# Groq-powered adaptive question generation
-│   │       ├── evaluator.py         # Groq-powered answer scoring
-│   │       └── session_manager.py   # Interview flow orchestration
+│   │   ├── services/
+│   │   ├── schemas/
+│   │   ├── models/
+│   │   ├── database.py
+│   │   ├── config.py
+│   │   └── main.py
+│   │
 │   ├── data/
-│   │   └── knowledge_base/          # Place reference PDFs here before ingesting
-│   ├── ingest.py                    # CLI script to embed PDFs into ChromaDB
+│   │   └── knowledge_base/
+│   │
+│   ├── ingest.py
 │   ├── requirements.txt
 │   └── Dockerfile
+│
 ├── frontend/
 │   ├── app/
-│   │   ├── page.tsx                 # Home — resume upload + role selector
-│   │   ├── interview/[session_id]/  # Adaptive interview page
-│   │   └── summary/[session_id]/   # Final report page
 │   ├── components/
-│   │   ├── FileUpload.tsx           # Drag-and-drop PDF upload
-│   │   ├── QuestionDisplay.tsx      # Question + difficulty badge
-│   │   ├── AnswerInput.tsx          # Answer textarea
-│   │   └── SummaryCard.tsx          # Expandable Q&A with scores
-│   ├── lib/api.ts                   # Typed API client
+│   ├── lib/
 │   └── Dockerfile
+│
 ├── docker-compose.yml
 ├── .env.example
 ├── DEMO_SCRIPT.md
 └── README.md
 ```
 
-## Quick Start
+---
+
+## ⚙️ Quick Start
 
 ### Prerequisites
 
-- Docker & Docker Compose
-- Groq API key (free at [console.groq.com](https://console.groq.com))
+* Docker
+* Docker Compose
+* Groq API Key
 
-### 1. Clone and configure
+### Clone Repository
 
 ```bash
 git clone https://github.com/jv0019/AI-candidate-screening-system.git
 cd AI-candidate-screening-system
+```
 
+### Configure Environment
+
+```bash
 cp .env.example .env
-# Edit .env and set: GROQ_API_KEY=your-key-here
 ```
 
-### 2. (Optional) Add knowledge base PDFs
+Add your Groq API key:
 
-Place reference PDFs (textbooks, documentation, etc.) in:
-
-```
-backend/data/knowledge_base/
+```env
+GROQ_API_KEY=your_api_key_here
 ```
 
-The system works without them using fallback questions, but RAG quality improves significantly with relevant PDFs.
-
-### 3. Start with Docker Compose
+### Start Services
 
 ```bash
 docker compose up --build
 ```
 
-Starts:
-- **PostgreSQL** on port 5432
-- **FastAPI backend** on port 8000
-- **Next.js frontend** on port 3000
+Services launched:
 
-### 4. Ingest knowledge base (optional)
+| Service    | Port |
+| ---------- | ---- |
+| Frontend   | 3000 |
+| Backend    | 8000 |
+| PostgreSQL | 5432 |
+
+### Open Application
+
+```text
+http://localhost:3000
+```
+
+---
+
+## 📚 Knowledge Base Ingestion
+
+Place PDFs into:
+
+```text
+backend/data/knowledge_base/
+```
+
+Then ingest:
 
 ```bash
 cd backend
-pip install -r requirements.txt
 python ingest.py
+```
 
-# Custom directory or reset:
+Optional:
+
+```bash
 python ingest.py --dir /path/to/pdfs --reset
 ```
 
-### 5. Open the app
+---
 
-Navigate to **http://localhost:3000**
+## 🔌 API Endpoints
 
-## API Reference
+| Method | Endpoint                | Description                             |
+| ------ | ----------------------- | --------------------------------------- |
+| POST   | `/upload_resume`        | Upload resume and create interview      |
+| POST   | `/answer/{session_id}`  | Submit answer and receive next question |
+| GET    | `/summary/{session_id}` | Retrieve final evaluation report        |
+| GET    | `/health`               | Service health check                    |
 
-| Method | Endpoint                | Description                                      |
-|--------|-------------------------|--------------------------------------------------|
-| POST   | `/upload_resume`        | Upload PDF + role → `session_id` + first question |
-| POST   | `/answer/{session_id}`  | Submit answer → next question or finished flag   |
-| GET    | `/summary/{session_id}` | Full Q&A log + per-answer scores + AI insight    |
-| GET    | `/health`               | Health check                                     |
+---
 
-### Upload resume
+## 🎯 Difficulty Scoring System
 
-```bash
-curl -X POST http://localhost:8000/upload_resume \
-  -F "file=@resume.pdf" \
-  -F "role=AI/ML Engineer"
-```
+Instead of using a simple Easy / Medium / Hard classification, the system maintains three independent capability scores:
 
-### Submit answer
+| Score        | Purpose                                   |
+| ------------ | ----------------------------------------- |
+| Junior Score | Fundamental technical knowledge           |
+| Mid Score    | Practical implementation experience       |
+| Senior Score | System design and architectural expertise |
 
-```bash
-curl -X POST http://localhost:8000/answer/{session_id} \
-  -H "Content-Type: application/json" \
-  -d '{"answer": "Your answer here"}'
-```
+These scores are continuously used to calibrate interview difficulty and question depth.
 
-### Get summary
+---
 
-```bash
-curl http://localhost:8000/summary/{session_id}
-```
+## 🔒 Design Goals
 
-## Environment Variables
+* Transparent AI decision-making
+* Explainable question generation
+* Retrieval-grounded evaluations
+* Scalable interview workflows
+* Consistent candidate assessment
+* Minimal operational cost
 
-| Variable                  | Default                                                                      | Description                          |
-|---------------------------|------------------------------------------------------------------------------|--------------------------------------|
-| `GROQ_API_KEY`            | `""`                                                                         | Groq API key (required)              |
-| `GROQ_MODEL`              | `mixtral-8x7b-32768`                                                         | Groq model for question generation   |
-| `GROQ_BASE_URL`           | `https://api.groq.com/openai/v1`                                             | Groq OpenAI-compatible endpoint      |
-| `DATABASE_URL`            | `postgresql+asyncpg://postgres:postgres@localhost:5432/candidate_screener`   | PostgreSQL connection string         |
-| `CHROMA_PERSIST_DIR`      | `./chroma_db`                                                                | ChromaDB persistence directory       |
-| `MAX_QUESTIONS_PER_SESSION` | `10`                                                                       | Max questions per interview session  |
-| `CHUNK_SIZE`              | `1000`                                                                       | Text chunk size for RAG ingestion    |
-| `CHUNK_OVERLAP`           | `200`                                                                        | Chunk overlap for RAG ingestion      |
-| `FRONTEND_URL`            | `http://localhost:3000`                                                       | CORS allowed origin                  |
+---
 
-## Running Without Docker
+## 📈 Future Enhancements
 
-### Backend
+* [ ] Multi-agent interview orchestration
+* [ ] Voice-based interviewing
+* [ ] Live coding assessments
+* [ ] ATS integration
+* [ ] Multi-role interview pipelines
+* [ ] Recruiter analytics dashboard
+* [ ] Candidate benchmarking
+* [ ] Interview replay functionality
 
-```bash
-cd backend
-python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-cp ../.env .env
-uvicorn app.main:app --reload --port 8000
-```
+---
 
-### Frontend
+## 📜 License
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
+MIT License
 
-### Database
+---
 
-```bash
-createdb candidate_screener
-```
+## 👤 Author
 
-## How Difficulty Is Inferred
+**Jivitesh Sachdev**
 
-The resume parser assigns three granular scores (0–10) based on skill keywords and experience years:
+Software Development • AI Engineering • RAG Systems • ESG Analytics
 
-| Score      | What it measures                                  |
-|------------|---------------------------------------------------|
-| `junior_score`  | Fundamental concept familiarity              |
-| `mid_score`     | Practical implementation experience          |
-| `senior_score`  | Architecture, design, and optimization depth |
+GitHub: https://github.com/jv0019
 
-The LLM uses all three scores to calibrate question depth — not just a single easy/medium/hard label.
+---
 
-## License
+### Keywords
 
-MIT
+Artificial Intelligence • RAG • LangChain • FastAPI • Next.js • LLM Applications • Candidate Screening • Interview Automation • ChromaDB • Vector Search • Groq • AI Recruiting • Retrieval-Augmented Generation
